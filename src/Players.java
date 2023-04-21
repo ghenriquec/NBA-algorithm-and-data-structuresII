@@ -1,5 +1,6 @@
+import java.io.*;
 import java.util.ArrayList;
-import MyIo.OutText;
+import java.util.Arrays;
 
 class Jogador {
     private int id, altura, peso, anoNascimento;
