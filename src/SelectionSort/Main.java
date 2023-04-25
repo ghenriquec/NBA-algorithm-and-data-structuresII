@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-class Jogador implements Comparable<Jogador> {
+class Jogador {
     private int id, altura, peso, anoNascimento;
     private String nome, universidade, cidadeNascimento, estadoNascimento;
     private ArrayList<Jogador> listJogadores = new ArrayList<>();
@@ -169,15 +169,6 @@ class Jogador implements Comparable<Jogador> {
     public Jogador clone() {
         return new Jogador(id, nome, altura, peso, universidade, anoNascimento, cidadeNascimento, estadoNascimento);
     }
-
-    @Override
-    public int compareTo(Jogador outro) {
-        int comparacaoCidade = this.cidadeNascimento.compareTo(outro.cidadeNascimento);
-        if (comparacaoCidade != 0) {
-            return comparacaoCidade;
-        }
-        return this.nome.compareTo(outro.nome);
-    }
 }
 
 class ArquivoTextoLeitura {
@@ -219,64 +210,8 @@ class ArquivoTextoLeitura {
 }
 
 class Main {
-
-    public static void bubbleSort(Jogador[] jogadores, int n, int[] comparacoes, int[] movimentacoes) {
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                comparacoes[0]++;
-                if (jogadores[j].compareTo(jogadores[j + 1]) > 0) {
-                    movimentacoes[0]++;
-                    Jogador temp = jogadores[j];
-                    jogadores[j] = jogadores[j + 1];
-                    jogadores[j + 1] = temp;
-                }
-            }
-        }
-    }
     public static void main(String[] args) {
-        ArrayList<Jogador> jogadoresList = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader("/tmp/jogadores.txt"))) {
-            String linha;
-
-            br.readLine();
-
-            while ((linha = br.readLine()) != null) {
-                String[] valores = linha.split(",", -1);
-                Jogador jogador = new Jogador(
-                        Integer.parseInt(valores[0]),
-                        valores[1],
-                        Integer.parseInt(valores[2]),
-                        Integer.parseInt(valores[3]),
-                        valores[4].isEmpty() ? "nao informado" : valores[4],
-                        valores[5].isEmpty() ? 0 : Integer.parseInt(valores[5]),
-                        valores[6].isEmpty() ? "nao informado" : valores[6],
-                        valores[7].isEmpty() ? "nao informado" : valores[7]
-                );
-                jogadoresList.add(jogador);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        Jogador[] jogadores = jogadoresList.toArray(new Jogador[0]);
-        int n = jogadores.length;
-
-        int[] comparacoes = {0};
-        int[] movimentacoes = {0};
-        long inicio = System.currentTimeMillis();
-        bubbleSort(jogadores, n, comparacoes, movimentacoes);
-        long fim = System.currentTimeMillis();
-
-        for (Jogador jogador : jogadores) {
-            jogador.imprimirDados();
-        }
-
-        try (FileWriter fw = new FileWriter("1395175_bolha.txt")) {
-            fw.write("1395175\t" + (fim - inicio) + "ms\t" + comparacoes[0] + "\t" + movimentacoes[0] + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Jogador newJogador = new Jogador();
+        newJogador.ler("/tmp/jogadores.txt");
     }
 }
