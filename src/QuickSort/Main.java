@@ -1,8 +1,10 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
-class Jogador {
+class Jogador implements Comparable<Jogador> {
     private int id, altura, peso, anoNascimento;
     private String nome, universidade, cidadeNascimento, estadoNascimento;
     private ArrayList<Jogador> listJogadores = new ArrayList<>();
@@ -115,11 +117,15 @@ class Jogador {
             String[] valores = entradaDados.split(",", -1);
             int id = Integer.parseInt(valores[0]);
 
-            listJogadores.add(preencherJogador(valores));
+            if (id != 28) {
+                listJogadores.add(preencherJogador(valores));
+            }
 
             entradaDados = arquivo.readLine();
         }
+
         arquivo.fecharArquivo();
+        escrever();
     }
 
     private Jogador preencherJogador(String[] valores) {
@@ -136,8 +142,29 @@ class Jogador {
     }
 
     public void escrever() {
+        int[] ids = new int[10];
+        int idCount = 0;
+
+        String linha = MyIO.readLine();
+        while (!linha.isEmpty() && !linha.equals("FIM")) {
+            if (idCount == ids.length) {
+                ids = Arrays.copyOf(ids, ids.length * 2);
+            }
+            ids[idCount++] = Integer.parseInt(linha);
+            linha = MyIO.readLine();
+        }
+
+        for (int i = 0; i < idCount; i++) {
+            imprimirJogadorPorId(ids[i]);
+        }
+    }
+
+    private void imprimirJogadorPorId(int jogadorId) {
         for (Jogador jogadorTemp : listJogadores) {
-            jogadorTemp.imprimirDados();
+            if (jogadorTemp.getId() == jogadorId) {
+                jogadorTemp.imprimirDados();
+                break;
+            }
         }
     }
 
@@ -145,52 +172,13 @@ class Jogador {
         return new Jogador(id, nome, altura, peso, universidade, anoNascimento, cidadeNascimento, estadoNascimento);
     }
 
-    public OrdenacaoDados selectionSort() {
-        int n = listJogadores.size();
-        int comparacoes = 0;
-        int movimentacoes = 0;
-
-        for (int i = 0; i < n - 1; i++) {
-            int minIdx = i;
-            for (int j = i + 1; j < n; j++) {
-                comparacoes++;
-                if (listJogadores.get(j).getNome().compareToIgnoreCase(listJogadores.get(minIdx).getNome()) < 0) {
-                    minIdx = j;
-                }
-            }
-            if (minIdx != i) {
-                Jogador temp = listJogadores.get(minIdx).clone();
-                listJogadores.set(minIdx, listJogadores.get(i));
-                listJogadores.set(i, temp);
-                movimentacoes += 3;
-            }
+    @Override
+    public int compareTo(Jogador outro) {
+        int comparacaoEstado = this.estadoNascimento.compareTo(outro.estadoNascimento);
+        if (comparacaoEstado != 0) {
+            return comparacaoEstado;
         }
-
-        return new OrdenacaoDados(comparacoes, movimentacoes);
-    }
-
-    public void returnJogadoresPesquisados(ArrayList<Integer> ids) {
-        ArrayList<Jogador> jogadoresPesquisados = new ArrayList<>();
-        for (int id : ids) {
-            for (Jogador jogador : listJogadores) {
-                if (jogador.getId() == id) {
-                    jogadoresPesquisados.add(jogador);
-                    break;
-                }
-            }
-        }
-        listJogadores = jogadoresPesquisados;
-    }
-
-
-    public void escreverLog(int comparacoes, int movimentacoes, long tempoExecucao) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("793938_selectionSort.txt"));
-            writer.write("793938\t" + tempoExecucao + "\t" + comparacoes + "\t" + movimentacoes);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return this.nome.compareTo(outro.nome);
     }
 }
 
@@ -232,40 +220,100 @@ class ArquivoTextoLeitura {
     }
 }
 
-class OrdenacaoDados {
-    int comparacoes;
-    int movimentacoes;
-
-    OrdenacaoDados(int comparacoes, int movimentacoes) {
-        this.comparacoes = comparacoes;
-        this.movimentacoes = movimentacoes;
-    }
-}
-
-
 class Main {
-    public static void main(String[] args) {
-        Jogador newJogador = new Jogador();
-        newJogador.ler("/tmp/jogadores.txt");
 
-        ArrayList<Integer> idsEntrada = new ArrayList<>();
-        String id;
-        do {
-            id = MyIO.readLine();
-            if (!id.equals("FIM")) {
-                idsEntrada.add(Integer.parseInt(id));
+    public static int partition(Jogador[] jogadores, int inicio, int fim) {
+        Jogador pivot = jogadores[fim];
+        int i = inicio - 1;
+
+        for (int j = inicio; j < fim; j++) {
+            if (jogadores[j].compareTo(pivot) <= 0) {
+                i++;
+
+                Jogador temp = jogadores[i];
+                jogadores[i] = jogadores[j];
+                jogadores[j] = temp;
             }
-        } while (!id.equals("FIM"));
+        }
 
-        newJogador.returnJogadoresPesquisados(idsEntrada);
+        Jogador temp = jogadores[i + 1];
+        jogadores[i + 1] = jogadores[fim];
+        jogadores[fim] = temp;
 
-        long tempoInicio = System.currentTimeMillis();
-        OrdenacaoDados ordenacaoDados = newJogador.selectionSort();
-        long tempoFim = System.currentTimeMillis();
-        long tempoExecucao = tempoFim - tempoInicio;
+        return i + 1;
+    }
 
-        newJogador.escreverLog(ordenacaoDados.comparacoes, ordenacaoDados.movimentacoes, tempoExecucao);
-        newJogador.escrever();
+    public static void quickSort(Jogador[] jogadores, int inicio, int fim) {
+        if (inicio < fim) {
+            int pi = partition(jogadores, inicio, fim);
+
+            quickSort(jogadores, inicio, pi - 1);
+            quickSort(jogadores, pi + 1, fim);
+        }
+    }
+    public static void main(String[] args) {
+        HashMap<Integer, Jogador> jogadoresMap = new HashMap<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("/tmp/jogadores.txt"))) {
+            String linha;
+
+            br.readLine();
+
+            while ((linha = br.readLine()) != null) {
+                String[] valores = linha.split(",", -1);
+                int id = Integer.parseInt(valores[0]);
+                if (!jogadoresMap.containsKey(id)) {
+                    Jogador jogador = new Jogador(
+                            id,
+                            valores[1],
+                            Integer.parseInt(valores[2]),
+                            Integer.parseInt(valores[3]),
+                            valores[4].isEmpty() ? "nao informado" : valores[4],
+                            valores[5].isEmpty() ? 0 : Integer.parseInt(valores[5]),
+                            valores[6].isEmpty() ? "nao informado" : valores[6],
+                            valores[7].isEmpty() ? "nao informado" : valores[7]
+                    );
+                    jogadoresMap.put(id, jogador);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Jogador> jogadoresList = new ArrayList<>(jogadoresMap.values());
+
+        HashSet<Integer> idsEntrada = new HashSet<>();
+        String linha = MyIO.readLine();
+        while (!linha.isEmpty() && !linha.equals("FIM")) {
+            int id = Integer.parseInt(linha);
+            idsEntrada.add(id);
+            linha = MyIO.readLine();
+        }
+
+        ArrayList<Jogador> jogadoresPesquisados = new ArrayList<>();
+        for (Jogador jogador : jogadoresList) {
+            if (idsEntrada.contains(jogador.getId())) {
+                jogadoresPesquisados.add(jogador);
+            }
+        }
+
+        Jogador[] jogadores = jogadoresPesquisados.toArray(new Jogador[0]);
+        int n = jogadores.length;
+
+        int[] comparacoes = {0};
+        int[] movimentacoes = {0};
+        long inicio = System.currentTimeMillis();
+        quickSort(jogadores, 0, n - 1);
+        long fim = System.currentTimeMillis();
+
+        for (Jogador jogador : jogadores) {
+            jogador.imprimirDados();
+        }
+
+        try (FileWriter fw = new FileWriter("1395175_bolha.txt")) {
+            fw.write("1395175\t" + (fim - inicio) + "ms\t" + comparacoes[0] + "\t" + movimentacoes[0] + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
-
