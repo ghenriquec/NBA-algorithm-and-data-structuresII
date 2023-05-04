@@ -24,7 +24,7 @@ class Jogador {
 
     public void imprimir() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[")
+        sb.append("## ")
                 .append(id).append(" ## ")
                 .append(nome).append(" ## ")
                 .append(altura).append(" ## ")
@@ -33,7 +33,7 @@ class Jogador {
                 .append(campoNaoInformado(universidade)).append(" ## ")
                 .append(campoNaoInformado(cidadeNascimento)).append(" ## ")
                 .append(campoNaoInformado(estadoNascimento))
-                .append("]\n");
+                .append(" ##\n");
         System.out.print(sb.toString());
     }
 
