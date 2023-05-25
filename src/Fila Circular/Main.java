@@ -24,7 +24,7 @@ class Jogador {
 
     public void imprimir() {
         StringBuilder sb = new StringBuilder();
-        sb.append("## ")
+        sb.append(" ## ")
                 .append(id).append(" ## ")
                 .append(nome).append(" ## ")
                 .append(altura).append(" ## ")
@@ -116,7 +116,7 @@ class Fila {
 
 	public void mostrar() {
     int i = primeiro;
-    int posicao = 1;
+    int posicao = 0;
     while (i != ultimo) {
         fila[i].imprimir(posicao++);
         i = (i + 1) % tamanhoMaximo;
@@ -148,7 +148,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 			Main aplicacao = new Main();
-			aplicacao.carregarJogadores("C:\\Users\\ghenr\\Development\\PilhaNBA\\src\\tmp\\jogadores.txt");
+			aplicacao.carregarJogadores("/tmp/jogadores.txt");
 
 			Fila fila = new Fila();
 
