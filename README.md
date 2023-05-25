@@ -1,5 +1,7 @@
 ## Trabalho prático sobre Métodos de Ordenação
 
+[Português](README.md) | [English](README_EN.md)
+
 Este projeto tem como objetivo implementar e analisar o desempenho de seis algoritmos de ordenação para a disciplina de Algoritimo e Estrutura de Dados 2
 
 Cada algoritmo tem suas próprias características e eficiências, variando de acordo com o tamanho e a natureza dos dados a serem ordenados.
