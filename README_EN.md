@@ -1,4 +1,7 @@
 # Practical Work on Sorting Methods
+
+[Português](README.md) | [English](README_EN.md)
+
 This project aims to implement and analyze the performance of six sorting algorithms for the Algorithms and Data Structures 2 course.
 
 Each algorithm has its own characteristics and efficiencies, varying according to the size and nature of the data to be sorted.
