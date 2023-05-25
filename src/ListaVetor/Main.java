@@ -18,7 +18,7 @@ class Jogador {
     }
 
     Jogador() {
-
+''
     }
 
     public void imprimir() {
