@@ -1,4 +1,4 @@
-# Practical Work on Sorting Methods
+# Practical Work on Sorting Methods 🇺🇸
 
 [Português](README.md) | [English](README_EN.md)
 
