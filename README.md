@@ -43,3 +43,5 @@ Uma lista encadeada é uma estrutura de dados composta por nós que são interco
 ## Lista duplamente encadeada: 
 Uma lista duplamente encadeada é uma extensão da lista encadeada, em que cada nó possui um ponteiro para o nó anterior e para o próximo nó na sequência. Isso permite percorrer a lista em ambas as direções, facilitando a inserção e remoção de elementos em qualquer posição. No entanto, a lista duplamente encadeada requer mais espaço de armazenamento devido ao ponteiro adicional em cada nó.
 
+## Árvore Binária:
+Uma árvore binária é uma estrutura de dados não-linear que tem uma característica especial onde cada nó ou vértice contém no máximo dois nós filhos. Esses são geralmente referidos como o nó filho esquerdo e o nó filho direito. No entanto, um nó na árvore binária pode ter nenhum, um ou dois filhos.
