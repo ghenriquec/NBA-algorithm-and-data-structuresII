@@ -42,3 +42,6 @@ A linked list is a data structure composed of nodes that are interconnected thro
 
 ## Doubly Linked List:
 A doubly linked list is an extension of the linked list, where each node has a pointer to the previous and next nodes in the sequence. This allows traversing the list in both directions, facilitating the insertion and removal of elements at any position. However, the doubly linked list requires more storage space due to the additional pointer in each node.
+
+## Binary Tree:
+A binary tree is a non-linear data structure that has a special feature where each node or vertex contains a maximum of two child nodes. These are generally referred to as the left child node and the right child node. However, a node in the binary tree can have none, one, or two children.
