@@ -1,4 +1,4 @@
-## Trabalho prático sobre Métodos de Ordenação
+## Trabalho prático sobre Métodos de Ordenação 🇧🇷
 
 [Português](README.md) | [English](README_EN.md)
 
