@@ -45,3 +45,6 @@ A doubly linked list is an extension of the linked list, where each node has a p
 
 ## Binary Tree:
 A binary tree is a non-linear data structure that has a special feature where each node or vertex contains a maximum of two child nodes. These are generally referred to as the left child node and the right child node. However, a node in the binary tree can have none, one, or two children.
+
+## Hash Table
+A Hash Table is a special data structure that associates search keys with values. Its purpose is, from a simple key, to do a quick search and get the desired value.
