@@ -45,3 +45,6 @@ Uma lista duplamente encadeada é uma extensão da lista encadeada, em que cada 
 
 ## Árvore Binária:
 Uma árvore binária é uma estrutura de dados não-linear que tem uma característica especial onde cada nó ou vértice contém no máximo dois nós filhos. Esses são geralmente referidos como o nó filho esquerdo e o nó filho direito. No entanto, um nó na árvore binária pode ter nenhum, um ou dois filhos.
+
+## Tabela Hash
+Uma tabela de dispersão ou Tabela Hash é uma estrutura de dados especial, que associa chaves de pesquisa a valores. Seu objetivo é, a partir de uma chave simples, fazer uma busca rápida e obter o valor desejado.
